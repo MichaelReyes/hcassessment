@@ -20,6 +20,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
+
+        buildConfigField "String", "OPEN_WEATHER_API_KEY", "\"a8f1700d72bc1bdbded69cfdbfcc52a3\""
     }
 
     buildTypes {
