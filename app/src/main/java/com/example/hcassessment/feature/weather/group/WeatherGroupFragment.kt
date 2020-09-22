@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.example.hcassessment.R
 import com.example.hcassessment.core.base.App
 import com.example.hcassessment.core.base.BaseActivity
@@ -12,6 +14,7 @@ import com.example.hcassessment.core.base.BaseFragment
 import com.example.hcassessment.core.extensions.observe
 import com.example.hcassessment.core.extensions.viewModel
 import com.example.hcassessment.databinding.FragmentWeatherGroupBinding
+import com.example.hcassessment.feature.weather.details.WeatherDetailsFragment
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +37,6 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
 
     override val layoutRes = R.layout.fragment_weather_group
 
-    private var twoPane = false
     private var listSkeleton: Skeleton? = null
 
     override fun onCreated(savedInstance: Bundle?) {
@@ -45,7 +47,6 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
     }
 
     private fun initViews(){
-        twoPane = baseView.findViewById<ViewGroup>(R.id.nav_host_fragment) != null
         rvWeatherGroups.adapter = adapter
 
         listSkeleton = rvWeatherGroups.applySkeleton(R.layout.item_weather_group, 5)
@@ -53,6 +54,13 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
         srlWeatherGroups.setOnRefreshListener {
             srlWeatherGroups.isRefreshing = false
             vm.fetchWeatherGroups(listOf("1701668", "3067696","1835848"))
+        }
+
+        adapter.clickListener = {
+            findNavController()
+                .navigate(R.id.action_open_details,
+                    bundleOf(Pair(WeatherDetailsFragment.ARGS_WEATHER_DETAIL, gson.toJson(it)))
+                )
         }
     }
 
@@ -90,5 +98,10 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
                 vm.setError(null)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposables.clear()
     }
 }

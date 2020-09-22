@@ -1,4 +1,4 @@
-package com.example.hcassessment.core.custom.ui
+package com.example.hcassessment.core.custom.weather_group
 
 import android.content.Context
 import android.util.AttributeSet

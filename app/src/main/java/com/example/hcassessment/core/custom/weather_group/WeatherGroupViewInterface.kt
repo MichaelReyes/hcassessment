@@ -1,4 +1,4 @@
-package com.example.hcassessment.core.custom.ui
+package com.example.hcassessment.core.custom.weather_group
 
 interface WeatherGroupViewInterface {
     var temperature: Double?

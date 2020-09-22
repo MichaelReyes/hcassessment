@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_medium">
+
+    <ImageView
+        android:id="@+id/ivFavorite"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:src="@drawable/ic_favorite_inactive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/font_size_extra_large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Manila" />
+
+    <TextView
+        android:id="@+id/tvTemp"
+        style="@style/WeatherDetails.Text_Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
+        tools:text="41°C" />
+
+    <TextView
+        android:id="@+id/tvWeather"
+        style="@style/WeatherDetails.Text_Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTemp"
+        app:layout_constraintTop_toTopOf="@+id/tvTemp"
+        tools:text="Clouds" />
+
+    <TextView
+        android:id="@+id/tvTempRange"
+        style="@style/WeatherDetails.Text_Details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTemp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTemp"
+        tools:text="High 36°C / Low 32°C" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

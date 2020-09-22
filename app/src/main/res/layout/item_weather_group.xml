@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.example.hcassessment.core.data.pojo.group.WeatherGroup" />
+            type="com.example.hcassessment.core.data.pojo.group.WeatherItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,9 +24,9 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 
-        <com.example.hcassessment.core.custom.ui.WeatherGroupView
+        <com.example.hcassessment.core.custom.weather_group.WeatherGroupView
             android:id="@+id/layoutWgv"
-            app:view_temperature="@{DoubleKt.kelvinToCelsius(item.main.temp)}"
+            app:view_temperature="@{item.main.temp}"
             app:view_isFavorite="@{item.favorite}"
             app:view_name="@{item.name}"
             app:view_weather="@{item.weather.get(0).main}"

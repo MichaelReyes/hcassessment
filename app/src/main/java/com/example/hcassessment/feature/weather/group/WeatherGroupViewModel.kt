@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hcassessment.BuildConfig
 import com.example.hcassessment.R
-import com.example.hcassessment.core.data.pojo.group.WeatherGroup
+import com.example.hcassessment.core.data.pojo.group.WeatherItem
 import com.example.hcassessment.core.network.WeatherRepository
 import com.example.hcassessment.core.utils.CustomLiveData
 import io.reactivex.disposables.CompositeDisposable
@@ -22,7 +22,7 @@ class WeatherGroupViewModel @Inject constructor(
     var hasInternetConnection = MutableLiveData(true)
 
     val ui = CustomLiveData<WeatherGroupUi>()
-    val groups = MutableLiveData(listOf<WeatherGroup>())
+    val groups = MutableLiveData(listOf<WeatherItem>())
 
     init {
         ui.value = WeatherGroupUi()

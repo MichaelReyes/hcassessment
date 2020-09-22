@@ -7,5 +7,6 @@
     <string name="error_generic">Oops! Something went wrong. Please try again later.</string>
     <string name="error_no_network">No network connection.</string>
 
-    <string name="format_temp">%,.2f°C</string>
+    <string name="format_temp">%,.1f°C</string>
+    <string name="format_temp_range">High %1$,.1f°C / Low %2$,.1f°C</string>
 </resources>

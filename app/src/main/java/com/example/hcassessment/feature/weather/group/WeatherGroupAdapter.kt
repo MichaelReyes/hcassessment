@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hcassessment.R
-import com.example.hcassessment.core.data.pojo.group.WeatherGroup
+import com.example.hcassessment.core.data.pojo.group.WeatherItem
 import com.example.hcassessment.core.utils.AutoUpdatableAdapter
 import com.example.hcassessment.core.utils.Constants
 import com.example.hcassessment.databinding.ItemWeatherGroupBinding
@@ -19,12 +19,12 @@ class WeatherGroupAdapter @Inject constructor(val context: Context) :
     RecyclerView.Adapter<WeatherGroupAdapter.Holder>(),
     AutoUpdatableAdapter {
 
-    internal var collection: List<WeatherGroup> by Delegates.observable(emptyList()) { prop, old, new ->
+    internal var collection: List<WeatherItem> by Delegates.observable(emptyList()) { prop, old, new ->
         autoNotify(old, new) { o, n -> o.id == n.id }
     }
 
 
-    internal var clickListener: (WeatherGroup) -> Unit = { _ -> }
+    internal var clickListener: (WeatherItem) -> Unit = { _ -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = Holder.from(parent, R.layout.item_weather_group)
 
@@ -40,7 +40,7 @@ class WeatherGroupAdapter @Inject constructor(val context: Context) :
                 val isFav = !wg.isFavorite
                 wg.isFavorite = isFav
 
-                Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherGroup>()).apply {
+                Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>()).apply {
                     if(isFav)
                         this.add(wg)
                     else
@@ -52,7 +52,7 @@ class WeatherGroupAdapter @Inject constructor(val context: Context) :
                 notifyItemChanged(position)
             }
 
-            wg.isFavorite = Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherGroup>()).any { it.id == wg.id }
+            wg.isFavorite = Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>()).any { it.id == wg.id }
 
             executePendingBindings()
         }

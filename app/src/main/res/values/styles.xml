@@ -20,4 +20,31 @@
     <style name="WeatherGroup">
         <item name="android:textColor">@color/colorTextIcons</item>
     </style>
+
+    <style name="WeatherGroup.Text_Name" parent="WeatherGroup">
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WeatherGroup.Text_Details" parent="WeatherGroup">
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <style name="WeatherDetails">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
+
+    <style name="WeatherDetails.Text_Name" parent="WeatherDetails">
+        <item name="android:textSize">@dimen/font_size_extra_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WeatherDetails.Text_Temp" parent="WeatherDetails">
+        <item name="android:textSize">@dimen/font_size_xxxx_large</item>
+    </style>
+
+    <style name="WeatherDetails.Text_Details" parent="WeatherDetails">
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
 </resources>
