@@ -26,7 +26,7 @@
 
         <com.example.hcassessment.core.custom.ui.WeatherGroupView
             android:id="@+id/layoutWgv"
-            app:view_temperature="@{DoubleKt.kelvinToCelsius(item.main.temp) + `°C`}"
+            app:view_temperature="@{DoubleKt.kelvinToCelsius(item.main.temp)}"
             app:view_isFavorite="@{item.favorite}"
             app:view_name="@{item.name}"
             app:view_weather="@{item.weather.get(0).main}"

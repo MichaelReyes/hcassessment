@@ -3,6 +3,7 @@ package com.example.hcassessment.feature.weather.group
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.hcassessment.BuildConfig
 import com.example.hcassessment.R
 import com.example.hcassessment.core.data.pojo.group.WeatherGroup
 import com.example.hcassessment.core.network.WeatherRepository
@@ -16,7 +17,9 @@ class WeatherGroupViewModel @Inject constructor(
     private val repo: WeatherRepository
 ): ViewModel() {
 
-    val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
+
+    var hasInternetConnection = MutableLiveData(true)
 
     val ui = CustomLiveData<WeatherGroupUi>()
     val groups = MutableLiveData(listOf<WeatherGroup>())
@@ -30,16 +33,21 @@ class WeatherGroupViewModel @Inject constructor(
     }
 
     fun fetchWeatherGroups(ids: List<String>){
-        repo.getWeatherGroup(
-            ids.joinToString { it }
-        ).doOnSubscribe { ui.value?.loading = true }
-            .subscribe({
-                ui.value?.loading = false
-                groups.value = it.list
-            },{
-                ui.value?.loading = false
-                setError(it?.localizedMessage?:context.getString(R.string.error_generic))
-            }).addTo(disposables)
+        if(hasInternetConnection.value == true)
+            repo.getWeatherGroup(
+                ids.joinToString (separator = ",")
+            ).doOnSubscribe { ui.value?.loading = true }
+                .subscribe({
+                    ui.value?.loading = false
+                    groups.value = it.list
+                },{
+                    if(BuildConfig.DEBUG)
+                        it.printStackTrace()
+                    ui.value?.loading = false
+                    setError(it?.localizedMessage?:context.getString(R.string.error_generic))
+                }).addTo(disposables)
+        else setError(context.getString(R.string.error_no_network))
+
     }
 
     override fun onCleared() {

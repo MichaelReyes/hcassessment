@@ -5,4 +5,7 @@
     <string name="label_offline">You are offline</string>
     <string name="error_list_empty">This list is empty</string>
     <string name="error_generic">Oops! Something went wrong. Please try again later.</string>
+    <string name="error_no_network">No network connection.</string>
+
+    <string name="format_temp">%,.2f°C</string>
 </resources>

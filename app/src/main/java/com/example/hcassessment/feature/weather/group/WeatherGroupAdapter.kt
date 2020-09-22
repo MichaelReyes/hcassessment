@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hcassessment.R
 import com.example.hcassessment.core.data.pojo.group.WeatherGroup
 import com.example.hcassessment.core.utils.AutoUpdatableAdapter
+import com.example.hcassessment.core.utils.Constants
 import com.example.hcassessment.databinding.ItemWeatherGroupBinding
+import com.orhanobut.hawk.Hawk
+import kotlinx.android.synthetic.main.view_weather_group.view.*
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -17,8 +20,7 @@ class WeatherGroupAdapter @Inject constructor(val context: Context) :
     AutoUpdatableAdapter {
 
     internal var collection: List<WeatherGroup> by Delegates.observable(emptyList()) { prop, old, new ->
-        autoNotify(old, new) { o, n -> o.id == n.id
-        }
+        autoNotify(old, new) { o, n -> o.id == n.id }
     }
 
 
@@ -30,9 +32,29 @@ class WeatherGroupAdapter @Inject constructor(val context: Context) :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.binding.apply{
-            item = collection[position]
+            val wg = collection[position]
+            item = wg
+
+            holder.itemView.setOnClickListener { clickListener(wg) }
+            layoutWgv.ivFavorite.setOnClickListener {
+                val isFav = !wg.isFavorite
+                wg.isFavorite = isFav
+
+                Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherGroup>()).apply {
+                    if(isFav)
+                        this.add(wg)
+                    else
+                        this.removeAll { it.id == wg.id }
+
+                    Hawk.put(Constants.PREF_KEY_GROUP_FAVORITES, this)
+                }
+
+                notifyItemChanged(position)
+            }
+
+            wg.isFavorite = Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherGroup>()).any { it.id == wg.id }
+
             executePendingBindings()
-            holder.itemView.setOnClickListener { clickListener(collection[position]) }
         }
     }
 

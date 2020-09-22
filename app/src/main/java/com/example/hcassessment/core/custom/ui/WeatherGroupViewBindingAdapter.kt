@@ -5,7 +5,7 @@ import androidx.databinding.BindingAdapter
 object WeatherGroupViewBindingAdapter {
 
     @BindingAdapter("view_temperature")
-    @JvmStatic fun viewTemperature(view: WeatherGroupView, value: String?){
+    @JvmStatic fun viewTemperature(view: WeatherGroupView, value: Double?){
         view.temperature = value
     }
 
