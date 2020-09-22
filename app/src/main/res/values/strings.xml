@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_offline">You are offline</string>
     <string name="error_list_empty">This list is empty</string>
+    <string name="error_generic">Oops! Something went wrong. Please try again later.</string>
 </resources>

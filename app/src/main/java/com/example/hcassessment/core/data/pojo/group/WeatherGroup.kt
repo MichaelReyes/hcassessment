@@ -10,7 +10,8 @@ data class WeatherGroup (
     val sys: Sys,
     val visibility: Int,
     val weather: List<Weather>,
-    val wind: Wind
+    val wind: Wind,
+    var isFavorite: Boolean = false
 )
 
 data class Clouds(

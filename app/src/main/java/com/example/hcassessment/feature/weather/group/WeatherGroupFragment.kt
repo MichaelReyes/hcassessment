@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hcassessment.R
+import com.example.hcassessment.core.base.BaseFragment
+import com.example.hcassessment.databinding.FragmentWeatherGroupBinding
+import javax.inject.Inject
 
-class WeatherGroupFragment : Fragment() {
+class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather_group, container, false)
+    @Inject
+    lateinit var vm: WeatherGroupViewModel
+
+
+
+    override val layoutRes = R.layout.fragment_weather_group
+
+    override fun onCreated(savedInstance: Bundle?) {
+
     }
-
 }

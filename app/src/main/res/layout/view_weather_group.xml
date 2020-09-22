@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/margin_medium"
+    tools:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/ivFavorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:src="@drawable/ic_favorite_inactive" />
+
+    <TextView
+        android:id="@+id/tvTemp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextIcons"
+        android:textSize="@dimen/font_size_medium"
+        tools:text="41°C" />
+
+    <TextView
+        android:id="@+id/tvName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textColor="@color/colorTextIcons"
+        android:textSize="@dimen/font_size_large"
+        android:textStyle="bold"
+        tools:text="Manila" />
+
+    <TextView
+        android:id="@+id/tvWeather"
+        app:layout_constraintBottom_toBottomOf="@+id/tvName"
+        app:layout_constraintStart_toEndOf="@+id/tvName"
+        app:layout_constraintTop_toTopOf="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:textColor="@color/colorTextIcons"
+        android:textSize="@dimen/font_size_medium"
+        tools:text="Clouds" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
