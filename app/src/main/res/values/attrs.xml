@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="WeatherGroupView">
+    <attr name="wgv_temperature" format="float" />
+    <attr name="wgv_name" format="string" />
+    <attr name="wgv_weather" format="string" />
+    <attr name="wgv_isFavorite" format="boolean" />
+  </declare-styleable>
+</resources>

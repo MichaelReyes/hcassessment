@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_xx_small">2dp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_between_m_and_l">24dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_x_large">52dp</dimen>
+    <dimen name="margin_extra_large">64dp</dimen>
+    <dimen name="margin_xx_large">96dp</dimen>
+    <dimen name="margin_xxx_large">110dp</dimen>
+    <dimen name="margin_xxxx_large">124dp</dimen>
+    <dimen name="margin_xxxxx_large">136dp</dimen>
+    <dimen name="margin_xxxxxx_large">156dp</dimen>
+    <dimen name="margin_xxxxxxx_large">190dp</dimen>
+    <dimen name="margin_xxxxxxxx_large">236dp</dimen>
+
+    <dimen name="font_size_extra_small">10sp</dimen>
+    <dimen name="font_size_small">12sp</dimen>
+    <dimen name="font_size_regular">14sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_large">20sp</dimen>
+    <dimen name="font_size_extra_large">24sp</dimen>
+    <dimen name="font_size_xx_large">28sp</dimen>
+    <dimen name="font_size_xxx_large">32sp</dimen>
+    <dimen name="font_size_xxxx_large">40sp</dimen>
+    <dimen name="font_size_xxxxx_large">48sp</dimen>
+
+    <dimen name="radius_small">5dp</dimen>
+    <dimen name="radius_medium">10dp</dimen>
+    <dimen name="radius_large">15dp</dimen>
+    <dimen name="radius_extra_large">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">400dp</dimen>
+    <dimen name="item_width">400dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="space_divider_size">1dp</dimen>
+
+    <dimen name="user_icon_size">48dp</dimen>
+    <dimen name="small_icon_size">24dp</dimen>
+</resources>
