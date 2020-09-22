@@ -9,11 +9,20 @@
         android:id="@+id/weatherGroupFragment"
         android:name="com.example.hcassessment.feature.weather.group.WeatherGroupFragment"
         android:label="WeatherGroupFragment"
-        tools:layout="@layout/fragment_weather_group" />
+        tools:layout="@layout/fragment_weather_group" >
+        <action
+            android:id="@+id/action_open_details"
+            app:destination="@id/weatherDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/weatherDetailsFragment"
         android:name="com.example.hcassessment.feature.weather.details.WeatherDetailsFragment"
         android:label="fragment_weather_details"
-        tools:layout="@layout/fragment_weather_details" />
+        tools:layout="@layout/fragment_weather_details" >
+        <action
+            android:id="@+id/action_open_list"
+            app:popUpTo="@id/weatherDetailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

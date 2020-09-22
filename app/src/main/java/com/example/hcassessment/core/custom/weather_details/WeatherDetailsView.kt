@@ -2,9 +2,11 @@ package com.example.hcassessment.core.custom.weather_details
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.example.hcassessment.R
+import com.example.hcassessment.core.data.pojo.group.WeatherItem
 import kotlinx.android.synthetic.main.view_weather_details.view.*
 import java.lang.Exception
 
@@ -66,7 +68,7 @@ class WeatherDetailsView @JvmOverloads constructor(
 
     init {
 
-        inflate(context, R.layout.view_weather_group, this)
+        inflate(context, R.layout.view_weather_details, this)
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.WeatherDetailsView)
 
@@ -104,4 +106,7 @@ class WeatherDetailsView @JvmOverloads constructor(
         }
     }
 
+    fun onFavoriteClick(listener: OnClickListener){
+        ivFavorite.setOnClickListener(listener)
+    }
 }
