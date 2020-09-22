@@ -8,4 +8,5 @@
     <string name="error_no_network">No network connection.</string>
 
     <string name="format_temp">%,.2f°C</string>
+    <string name="format_temp_range">High %1$,.2f°C / Low %2$,.2f°C</string>
 </resources>
