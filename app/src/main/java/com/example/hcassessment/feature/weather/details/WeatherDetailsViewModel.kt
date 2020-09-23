@@ -1,7 +1,6 @@
 package com.example.hcassessment.feature.weather.details
 
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hcassessment.BuildConfig
@@ -14,6 +13,7 @@ import com.orhanobut.hawk.Hawk
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
+import kotlin.Exception
 
 class WeatherDetailsViewModel @Inject constructor(
     private val context: Context,
@@ -32,8 +32,11 @@ class WeatherDetailsViewModel @Inject constructor(
     }
 
     fun setWeatherDetails(value: WeatherItem){
-        value.isFavorite =
-            Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>()).any { it.id == value.id }
+        try {
+            value.isFavorite =
+                Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>())
+                    .any { it.id == value.id }
+        }catch (e: Exception){ e.printStackTrace() }
         weather.value = value
     }
 
@@ -53,7 +56,7 @@ class WeatherDetailsViewModel @Inject constructor(
                         it.printStackTrace()
                     setError(it.localizedMessage?:context.getString(R.string.error_generic))
                     ui.value?.loading = false
-                })
+                }).addTo(disposables)
         }
     }
 
@@ -61,14 +64,16 @@ class WeatherDetailsViewModel @Inject constructor(
         weather.value?.let {item ->
             val isFav = !item.isFavorite
             item.isFavorite = isFav
-            Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>()).apply {
-                if(isFav)
-                    this.add(item)
-                else
-                    this.removeAll { it.id == item.id }
+            try {
+                Hawk.get(Constants.PREF_KEY_GROUP_FAVORITES, mutableListOf<WeatherItem>()).apply {
+                    if (isFav)
+                        this.add(item)
+                    else
+                        this.removeAll { it.id == item.id }
 
-                Hawk.put(Constants.PREF_KEY_GROUP_FAVORITES, this)
-            }
+                    Hawk.put(Constants.PREF_KEY_GROUP_FAVORITES, this)
+                }
+            }catch (e: ArrayIndexOutOfBoundsException){ e.printStackTrace() }
             weather.value = item
         }
     }

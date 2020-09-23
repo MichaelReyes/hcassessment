@@ -3,14 +3,18 @@ package com.example.hcassessment.test
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.hcassessment.core.data.pojo.group.WeatherGroupResponse
+import com.example.hcassessment.core.base.App
 import com.example.hcassessment.core.data.pojo.group.WeatherItem
 import com.example.hcassessment.core.network.WeatherRepository
-import com.example.hcassessment.feature.weather.group.WeatherGroupUi
-import com.example.hcassessment.feature.weather.group.WeatherGroupViewModel
+import com.example.hcassessment.feature.weather.details.WeatherDetailsUi
+import com.example.hcassessment.feature.weather.details.WeatherDetailsViewModel
 import com.example.hcassessment.utils.*
-import io.mockk.*
+import com.orhanobut.hawk.*
+import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.slot
+import io.mockk.verify
 import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.disposables.Disposable
@@ -26,23 +30,27 @@ import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 
+
 @RunWith(MockitoJUnitRunner::class)
-class WeatherGroupListTest {
+class WeatherDetailsTest {
+
+    @MockK(relaxed = true)
+    lateinit var app: App
 
     @MockK
     lateinit var context: Context
 
     @MockK
-    lateinit var viewModel: WeatherGroupViewModel
+    lateinit var viewModel: WeatherDetailsViewModel
 
     @MockK(relaxed = true)
     lateinit var repo: WeatherRepository
 
     @MockK(relaxed = true)
-    lateinit var groupsObserver: Observer<List<WeatherItem>>
+    lateinit var weatherObserver: Observer<WeatherItem>
 
     @MockK(relaxed = true)
-    lateinit var uiObserver: Observer<WeatherGroupUi>
+    lateinit var uiObserver: Observer<WeatherDetailsUi>
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -62,22 +70,24 @@ class WeatherGroupListTest {
 
     @Before
     fun setup() {
-
         MockKAnnotations.init(this)
+
+        Hawk.init(app).build()
 
         RxJavaPlugins.setIoSchedulerHandler { immediateScheduler }
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { immediateScheduler }
         RxAndroidPlugins.setMainThreadSchedulerHandler { immediateScheduler }
 
         repo.apply {
-            every { getWeatherGroup(getCityIds().joinToString(separator = ",")) } returns getWeatherGroupsResponse()
-            every { getWeatherGroup(getCityIdsNotFound().joinToString(separator = ",")) } returns getWeatherGroupsNotFoundResponse()
+            every { getWeatherDetails("Manila") } returns getManilaWeather()
+            every { getWeatherDetails("Prague") } returns getPragueWeather()
+            every { getWeatherDetails("Seoul") } returns getSeoulWeather()
         }
 
-        viewModel = WeatherGroupViewModel(context, repo)
+        viewModel = WeatherDetailsViewModel(context, repo)
 
         viewModel.apply {
-            groups.observeForever(groupsObserver)
+            weather.observeForever(weatherObserver)
             ui.observeForever(uiObserver)
         }
     }
@@ -89,34 +99,38 @@ class WeatherGroupListTest {
     }
 
     @Test
-    fun `Fetch weather group API success`(){
-        viewModel.run {
-            fetchWeatherGroups(getCityIds())
+    fun `On select Manila set details(passed from list) and fetch updated details from API`(){
+        viewModel.apply {
+            setWeatherDetails(manilaWeatherIdOnly)
 
-            val weatherGroupsCapture = slot<List<WeatherItem>>()
-            val uiCapture = slot<WeatherGroupUi>()
+            val weatherCapture = slot<WeatherItem>()
 
-            verify(exactly = 2 /* init + actual call */){ groupsObserver.onChanged(capture(weatherGroupsCapture)) }
-            verify(exactly = 3 /* init + loading true + loading false */ ){ uiObserver.onChanged(capture(uiCapture)) }
+            fetchDetails()
 
-            assertEquals(weatherGroup.list, weatherGroupsCapture.captured)
+            verify(exactly = 2 /* on set after click on list + fetch details API response */) { weatherObserver.onChanged(capture(weatherCapture)) }
+
+            assertEquals(manilaWeather, weatherCapture.captured)
         }
-
     }
 
     @Test
-    fun `Fetch weather group API with not found result`(){
-        viewModel.run {
-            fetchWeatherGroups(getCityIdsNotFound())
+    fun `On select Manila and toggle favorite`(){
+        viewModel.apply {
+            setWeatherDetails(manilaWeatherIdOnly)
 
-            val weatherGroupsCapture = slot<List<WeatherItem>>()
-            val uiCapture = slot<WeatherGroupUi>()
+            val weatherCapture = slot<WeatherItem>()
 
-            verify(exactly = 1 /* init + actual call */){ groupsObserver.onChanged(capture(weatherGroupsCapture)) }
-            verify(exactly = 4 /* init + loading true + loading false + set error*/ ){ uiObserver.onChanged(capture(uiCapture)) }
+            fetchDetails()
 
-            assertEquals("No Data", uiCapture.captured.error)
+            verify(exactly = 2 /* on set after click on list + fetch details API response */) { weatherObserver.onChanged(capture(weatherCapture)) }
+
+            assertEquals(manilaWeather, weatherCapture.captured)
+
+            onToggleFavorite()
+
+            verify(exactly = 3 /* on set after click on list + fetch details API response + toggle fav */) { weatherObserver.onChanged(capture(weatherCapture)) }
+
+            assertEquals(true, weatherCapture.captured.isFavorite)
         }
-
     }
 }
