@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.hcassessment.feature.weather.details.WeatherDetailsViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".feature.weather.details.WeatherDetailsFragment">
+
+        <com.example.hcassessment.core.custom.weather_details.WeatherDetailsView
+            android:id="@+id/wDetailsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:view_weather_details="@{vm.weather}"
+            app:onFavoriteClick="@{() -> vm.onToggleFavorite()}"/>
+
+        <include layout="@layout/banner_no_network" />
+
+    </FrameLayout>
+
+</layout>
