@@ -42,8 +42,13 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
     override fun onCreated(savedInstance: Bundle?) {
         (activity as? BaseActivity<*>)?.setToolbar(show = true, showBackButton = false, title = "Weather Forecast")
 
-        initViews()
         initObserver()
+        initViews()
+        fetchData()
+    }
+
+    private fun fetchData(){
+        vm.fetchWeatherGroups(listOf("1701668", "3067696","1835848"))
     }
 
     private fun initViews(){
@@ -53,7 +58,7 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
 
         srlWeatherGroups.setOnRefreshListener {
             srlWeatherGroups.isRefreshing = false
-            vm.fetchWeatherGroups(listOf("1701668", "3067696","1835848"))
+            fetchData()
         }
 
         adapter.clickListener = {
@@ -66,7 +71,6 @@ class WeatherGroupFragment : BaseFragment<FragmentWeatherGroupBinding>() {
 
     private fun initObserver(){
         vm = viewModel(viewModelFactory){
-            fetchWeatherGroups(listOf("1701668", "3067696","1835848"))
             observe(ui, ::handleUiUpdates)
             observe(groups){
                 it?.run { adapter.collection = this }
